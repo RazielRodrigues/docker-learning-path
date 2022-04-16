@@ -1,84 +1,84 @@
-# DOCKER LEARNING PATH
+# DOCKER
 
-    - NÃO É UM SISTEMA DE VIRTUALIZAÇÃO DE S.O
-    - É UM SISTEMA DE ADMINISTRAÇÃO DE CONTÊINERES QUE SEPARA UM PROCESSO DE UM AMBIENTE
-    - HOST E CONTAINER COMPARTILHAM O MEMSO KERNEL
-    - EMPACOTA SOFTWARE COM VARIOS NIVEIS DE ISOLAMENTO
-    - O CONTAINER TEM AS MESMAS CARACTERISTICAS DE UMA VM, PORÉM, COM MENOS CONSUMO DE MEMÓRIA
-    - XLC X DOCKER
-        - O DOCKER ABSTRAIU ESSA IDEIA, FAZENDO COM QUE O CONTAINER 
-          SEJA UM PROCESSO MAIS FACIL DE SER MANIPULADO
+    - não é um sistema de virtualização de s.o
+    - é um sistema de administração de contêineres que separa um processo de um ambiente
+    - host e container compartilham o memso kernel
+    - empacota software com varios niveis de isolamento
+    - o container tem as mesmas caracteristicas de uma vm, porém, com menos consumo de memória
+    - xlc x docker
+        - o docker abstraiu essa ideia, fazendo com que o container 
+          seja um processo mais facil de ser manipulado
 
 #### CONTAINERS
 
-    - SEGREGAÇÃO DE PROCESSOS NO MESMO KERNEL (ISOLAMENTO)
-    - SISTEMAS DE ARQUIVOS CRIADOS A PARTIR DE UMA IMAGEM
-    - AMBIENTES LEVE E PORTÁTEIS NO QUAL APLICAÇÕES SÃO EXECUTADAS
-    - ENCAPSULA TODOS OS BINÁRIOS E BIBLIOTECAS NECESSÁRIAS PARA EXECUTAR UM PROGRAMA
-    - UM CONTAINER DEVE SER MINIMALISTA, POR ISSO, NÃO DEVE TER MAIS DE UM PROCESSO
-    - ALGO ENTRE UM CHROOT E UMA VM
-        - CHROOT: APRISIONA ARQUIVO EM UMA PASTA
-        - VM: AMBIENTE DE EXECUÇÃO COMPLETO
-        - DOCKER: ISOLA O PROCESSO EM UM AMBIENTE SEPARADO
+    - segregação de processos no mesmo kernel (isolamento)
+    - sistemas de arquivos criados a partir de uma imagem
+    - ambientes leve e portáteis no qual aplicações são executadas
+    - encapsula todos os binários e bibliotecas necessárias para executar um programa
+    - um container deve ser minimalista, por isso, não deve ter mais de um processo
+    - algo entre um chroot e uma vm
+        - chroot: aprisiona arquivo em uma pasta
+        - vm: ambiente de execução completo
+        - docker: isola o processo em um ambiente separado
 
 #### IMAGENS
 
-    - MODELO DE SISTEMA DE ARQUIVOS SOMENTE-LEITURA USADO PARA CRIAR UM CONTAINER
-    - IMAGENS SAO CRIADAS A PARTIR DE UM PROCESSO CHAMADO BUILD
-    - SÃO ARMAZENADAS EM REPOSITORIOS NO REGISTRY (DOCKER HUB)
-    - SÃO COMPOSTAS POR UMA OU MAIS CAMADAS (LAYERS)
-    - UMA CAMADA REPRESENTA UMA OU MAIS MUDANÇAS NO SISTEMA DE ARQUIVO (COMO SE FOSSE UM COMMIT)
-    - UMA CAMADA É TAMBÉM CHAMADA DE IMAGEM INTERMÉDIARIA POIS ELA 
-      POSSUI OUTROS BINARIOS PARA O BINARIO QUE VOCE QUER FUNCIONAR
-      E A JUNÇÃO DESSAS CAMADAS FORMAM AS IMAGENS
-    - A APENAS A ULTIMA CAMADA PODE SER ALTERADA QUANDO O CONTAINER FOR INICIADO
-    - AUFS (ADVANCED MULTI LAYERED UNIFICATION FILESSYSTEM) É MUITO USADO
-    - O GRANDE OBJETIVO DESSA ESTRATEGIA DE DIVIDIR UMA IMAGEM EM CAMADAS É O REUSO
-    - É POSSIVEL COMPOR IMAGENS A PARTIR DE COMANDOS DE OUTRAS IMAGENS
-        - DOCKER.HUB
+    - modelo de sistema de arquivos somente-leitura usado para criar um container
+    - imagens sao criadas a partir de um processo chamado build
+    - são armazenadas em repositorios no registry (docker hub)
+    - são compostas por uma ou mais camadas (layers)
+    - uma camada representa uma ou mais mudanças no sistema de arquivo (como se fosse um commit)
+    - uma camada é também chamada de imagem intermédiaria pois ela 
+      possui outros binarios para o binario que voce quer funcionar
+      e a junção dessas camadas formam as imagens
+    - a apenas a ultima camada pode ser alterada quando o container for iniciado
+    - aufs (advanced multi layered unification filessystem) é muito usado
+    - o grande objetivo dessa estrategia de dividir uma imagem em camadas é o reuso
+    - é possivel compor imagens a partir de comandos de outras imagens
+        - docker.hub
 
 #### IMAGENS VS CONTAINERS
 
-    - DOCKER HUB É COMO O GITHUB
-    - IMAGENS SÃO CLASSES
-    - CONTAINER SÃO OBJETOS
-    - KITEMATIC
+    - docker hub é como o github
+    - imagens são classes
+    - container são objetos
+    - kitematic
 
-    - ARQUITEURA
-        - DAEMON VAI NO REGISTRY E FAZ O DOWNLOAD DA IMAGEM
-        - APOS ISSO FAZ UM CACHE DAS IMAGENS
-        - CASO VOCE TENHA AS IMAGENS NA MAQUINA ELE  VAI USAR AS QUE JA TEM
+    - arquiteura
+        - daemon vai no registry e faz o download da imagem
+        - apos isso faz um cache das imagens
+        - caso voce tenha as imagens na maquina ele  vai usar as que ja tem
             
 #### INSTALAÇÃO
 
-    - LINUX
-        - DOCKER HOST É O PRIOPRIO LINUX
-        - DOCKER DAEMON É O LINUX QUE VAI SER O HOST
-        - DOCKER CLIENT É O LINUX QUE VAI SER O CLIENTE
+    - linux
+        - docker host é o prioprio linux
+        - docker daemon é o linux que vai ser o host
+        - docker client é o linux que vai ser o cliente
 
-    - MAC OS
-        - O DOCKER HOST É UMA VM LINUX
+    - mac os
+        - o docker host é uma vm linux
 
-    - WINDOWS
-        - O DOCKER HOST É UMA VM LINUX NO WINDOWS
-        - QUANDO TEM WSL É COMO SE EXECUTASSE NO LINUX
+    - windows
+        - o docker host é uma vm linux no windows
+        - quando tem wsl é como se executasse no linux
 
 
-    - APOS O PRIMEIRO RUN A IMAGEM ESTA EM CACHE
+    - apos o primeiro run a imagem esta em cache
 
 #### CONTAINERS
 
-    - O COMANDO RUN EXECUTA QUATRO COMANDOS
-        - DOCKER IMAGEM PULL
-        - DOCKER CONTAINER CREATE
-        - DOCKER CONTAINER START
-        - DOCKER CONTAINER EXEC
+    - o comando run executa quatro comandos
+        - docker imagem pull
+        - docker container create
+        - docker container start
+        - docker container exec
 
-    - MODO DAEMON DEIXA RODANDO EM BACKGROUND
-    - MODO ITERATIVO MODO DE TESTE
-    - ARQUIVOS NÃO COMPARTILHADOS ENTRE CONTAINERS
-    - O RUN SEMPRE CRIA UM NOVO CONTAINER
-    - CONTAINERS DEVEM TER NOMES UNICOS
+    - modo daemon deixa rodando em background
+    - modo iterativo modo de teste
+    - arquivos não compartilhados entre containers
+    - o run sempre cria um novo container
+    - containers devem ter nomes unicos
 
 #### CLI
 
