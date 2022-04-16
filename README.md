@@ -49,7 +49,7 @@
         - APOS ISSO FAZ UM CACHE DAS IMAGENS
         - CASO VOCE TENHA AS IMAGENS NA MAQUINA ELE  VAI USAR AS QUE JA TEM
             
-#### INSTALÇÃO
+#### INSTALAÇÃO
 
     - LINUX
         - DOCKER HOST É O PRIOPRIO LINUX
@@ -63,6 +63,56 @@
         - O DOCKER HOST É UMA VM LINUX NO WINDOWS
         - QUANDO TEM WSL É COMO SE EXECUTASSE NO LINUX
 
-#### HELLO WORLD
 
-    ...
+    - APOS O PRIMEIRO RUN A IMAGEM ESTA EM CACHE
+
+#### CONTAINERS
+
+    - O COMANDO RUN EXECUTA QUATRO COMANDOS
+        - DOCKER IMAGEM PULL
+        - DOCKER CONTAINER CREATE
+        - DOCKER CONTAINER START
+        - DOCKER CONTAINER EXEC
+
+    - MODO DAEMON DEIXA RODANDO EM BACKGROUND
+    - MODO ITERATIVO MODO DE TESTE
+    - ARQUIVOS NÃO COMPARTILHADOS ENTRE CONTAINERS
+    - O RUN SEMPRE CRIA UM NOVO CONTAINER
+    - CONTAINERS DEVEM TER NOMES UNICOS
+
+#### CLI
+
+    - docker container run hello-world (container de teste)
+    - docker container run debian bash --version  (ver a versão do bash)
+
+    - docker container ps (lista os containers ativos)
+    - docker container ps -a (log dos comandos de containers)
+
+    - docker container run --rm debian bash --version (executa e ja remove)
+    - docker container run -it debian bash (entra no bash em modo iterativo)
+    - docker container run -it --name container-teste debian bash (modo iterativo + nome customizado)
+
+    - docker container ls (lista os containers)
+    - docker container ls -a (lista os containers com logs)
+    - docker volume ls (lista os volumes)
+
+    - docker container run -p 8080:80 nginx (porta 80 do container para a porta 8080 do host)
+    - docker container run -p 8080:80 -v c:/not-found:/usr/share/nginx/html nginx
+    - docker container run -p 8080:80 -v <caminho arquivo>:/usr/share/nginx/html nginx
+        -p
+            onde 8080 é a porta que o meu pc acessa
+            onde 80 é a porta que o container expoe o serviço nginx
+        -v
+            c:/not-found pasta que eu quero que o nginx veja na minha maquina
+            /usr/share/nginx/html pasta do nginx para servir o conteudo
+    - docker container run -d --name ex-daemon-basic -p 8080:80 -v <caminho arquivo>:/usr/share/nginx/html nginx
+        - iniciando o container em modo de background
+    
+    - docker container start ex-daemon-basic (inicia o container)
+    - docker container start -ai ex-daemon-basic (inicia o container em modo iterativo)
+    - docker container restart ex-daemon-basic (reinicia o container)
+    - docker container stop ex-daemon-basic (para o container)
+
+    - docker container logs ex-daemon-basic (logs do container)
+    - docker container inspect ex-daemon-basic (informações do container)
+    - docker container exec ex-daemon-basic uname -or (Informações da versão do volume que roda)
