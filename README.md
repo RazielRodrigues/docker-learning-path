@@ -101,15 +101,15 @@ curso: https://www.udemy.com/course/curso-docker
     - docker volume ls (lista os volumes)
 
     - docker container run -p 8080:80 nginx (porta 80 do container para a porta 8080 do host)
-    - docker container run -p 8080:80 -v c:/not-found:/usr/share/nginx/html nginx
-    - docker container run -p 8080:80 -v <caminho arquivo>:/usr/share/nginx/html nginx
+    - docker container run -p 8080:80 -v c:/<caminho arquivo>:/usr/share/nginx/html nginx
         -p
             onde 8080 é a porta que o meu pc acessa
             onde 80 é a porta que o container expoe o serviço nginx
         -v
-            c:/not-found pasta que eu quero que o nginx veja na minha maquina
+            c:/<caminho arquivo> pasta que eu quero que o nginx veja na minha maquina
             /usr/share/nginx/html pasta do nginx para servir o conteudo
-    - docker container run -d --name ex-daemon-basic -p 8080:80 -v <caminho arquivo>:/usr/share/nginx/html nginx
+    
+    - docker container run -d --name ex-daemon-basic -p 8080:80 -v c:/<caminho arquivo>:/usr/share/nginx/html nginx
         - iniciando o container em modo de background
     
     - docker container start ex-daemon-basic (inicia o container)
@@ -120,3 +120,5 @@ curso: https://www.udemy.com/course/curso-docker
     - docker container logs ex-daemon-basic (logs do container)
     - docker container inspect ex-daemon-basic (informações do container)
     - docker container exec ex-daemon-basic uname -or (Informações da versão do volume que roda)
+
+    - docker run -dit --name apache_app -p 8080:80 -v c:<caminho arquivo>:/usr/local/apache2/htdocs/ httpd:2.4 (instalando o apache)
