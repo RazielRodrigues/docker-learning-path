@@ -1,5 +1,9 @@
-# DOCKER
 
+<img src="...">
+
+curso: https://www.udemy.com/course/curso-docker
+
+# DOCKER
     - não é um sistema de virtualização de s.o
     - é um sistema de administração de contêineres que separa um processo de um ambiente
     - host e container compartilham o memso kernel
