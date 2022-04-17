@@ -3,7 +3,7 @@
 
 curso: https://www.udemy.com/course/curso-docker
 
-# DOCKER
+#### DOCKER
     - não é um sistema de virtualização de s.o
     - é um sistema de administração de contêineres que separa um processo de um ambiente
     - host e container compartilham o memso kernel
@@ -48,7 +48,7 @@ curso: https://www.udemy.com/course/curso-docker
     - container são objetos
     - kitematic
 
-    - arquiteura
+    - arquitetura
         - daemon vai no registry e faz o download da imagem
         - apos isso faz um cache das imagens
         - caso voce tenha as imagens na maquina ele  vai usar as que ja tem
@@ -84,7 +84,7 @@ curso: https://www.udemy.com/course/curso-docker
     - o run sempre cria um novo container
     - containers devem ter nomes unicos
 
-#### CLI
+#### CLI: CONTAINER
 
     - docker container run hello-world (container de teste)
     - docker container run debian bash --version  (ver a versão do bash)
@@ -109,7 +109,8 @@ curso: https://www.udemy.com/course/curso-docker
             c:/<caminho arquivo> pasta que eu quero que o nginx veja na minha maquina
             /usr/share/nginx/html pasta do nginx para servir o conteudo
     
-    - docker container run -d --name ex-daemon-basic -p 8080:80 -v c:/<caminho arquivo>:/usr/share/nginx/html nginx
+    - docker container run -d --name ex-daemon-basic -p 8080:80 -v 
+      c:/<caminho arquivo>:/usr/share/nginx/html nginx
         - iniciando o container em modo de background
     
     - docker container start ex-daemon-basic (inicia o container)
@@ -121,4 +122,59 @@ curso: https://www.udemy.com/course/curso-docker
     - docker container inspect ex-daemon-basic (informações do container)
     - docker container exec ex-daemon-basic uname -or (Informações da versão do volume que roda)
 
-    - docker run -dit --name apache_app -p 8080:80 -v c:<caminho arquivo>:/usr/local/apache2/htdocs/ httpd:2.4 (instalando o apache)
+    - docker run -dit --name apache_app -p 8080:80 -v 
+    c:<caminho arquivo>:/usr/local/apache2/htdocs/ httpd:2.4 (instalando o apache)
+
+    - docker image --help
+    - docker container --help
+    - docker volume --help
+
+#### CLI: IMAGE
+
+    - docker image pull redis:latest
+    - docker image tag redis:latest coder-redis
+    - docker image ls
+    - docker image pull
+    - docker iamge rm <nome>
+    - docker image inspect <nome>
+    - docker image tag <imagemorigem> /mnome
+    - docker image build
+    - docker image push
+
+#### DOCKER IMAGE
+
+    - concatenar layers
+    - tentar reaproveitar layers
+    - procure manter coisas estaveis na parte de cima do arquivo
+
+    - docker registry: voce pode fazer um registry como um repositorio
+    - docker hub: SAAS
+
+    - criar o arquivo Dockerfile com o conteudo das suas imagens
+    - docker image build -t <nome> <caminho>
+    - docker container run -p 80:80 <nome>
+
+    - docker image build -t arg-build .
+    - docker container run arg-build bash -c 'echo $S3_BUCKET'
+    - docker image build --build-arg S3_BUCKET=myapp -t arg-build .
+    - docker container run arg-build bash -c 'echo $S3_BUCKET'
+        - pode se passar argumentos para o build assim dando formas de manipular o fluxo
+    - docker image inspect --format '{{index .Config.Env}}'
+        - mostra um dado do inspect
+
+    - docker container run -p 80:80 copy-build
+
+    - docker image build -t python-build .
+    - docker container run -it -v C:\Users\Raziel\Desktop\docker-learning-path\docker\python-build:/app 
+      -p 80:8000 --name python-server2 python-build
+    - docker container run -it --volumes-from=python-server2 debian cat /log/http-server.log
+
+    - docker image tag simple-build razielx3/simple-build:1.0
+
+    - docker login --username=<usuario>
+    - docker image push <nome imagem>:<versao>
+
+#### DOCKER REDES
+
+    - cada container tem a sua rede
+    - docker cria uma bridge para abstrair a rede
