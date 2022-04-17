@@ -84,7 +84,7 @@ curso: https://www.udemy.com/course/curso-docker
     - o run sempre cria um novo container
     - containers devem ter nomes unicos
 
-#### CLI: CONTAINER
+#### CLI CONTAINER
 
     - docker container run hello-world (container de teste)
     - docker container run debian bash --version  (ver a versão do bash)
@@ -129,7 +129,7 @@ curso: https://www.udemy.com/course/curso-docker
     - docker container --help
     - docker volume --help
 
-#### CLI: IMAGE
+#### CLI IMAGE
 
     - docker image pull redis:latest
     - docker image tag redis:latest coder-redis
@@ -174,7 +174,31 @@ curso: https://www.udemy.com/course/curso-docker
     - docker login --username=<usuario>
     - docker image push <nome imagem>:<versao>
 
-#### DOCKER REDES
+#### DOCKER NETWORK BRIDGE
 
     - cada container tem a sua rede
-    - docker cria uma bridge para abstrair a rede
+    - docker cria uma bridge para abstrair a rede do container e do host
+    - tipos de rede
+        - none network
+        - bridge network (default)
+        - host network
+        - overlay network (não é muito usado swarm)
+    - docker network ls
+
+    - docker container run -d --net none debian
+    - docker container run --rm alpine ash -c "ifconfig"
+    - docker container run --rm --net none alpine ash -c "ifconfig"
+
+    - docker container run -d --name container1 alpine sleep 1000
+    - docker container exec -it container1 ifconfig
+
+    - docker container exec -it container1 ping <ip do outro container>
+    - docker network create --driver bridge rede_nova
+
+    - docker container run -d --name container3 --net rede_nova alpine sleep 1000
+    - docker container exec -it container3 ifconfig
+    - docker network connect bridge container3
+    - docker container inspect container1
+    - docker network disconnect bridge container3
+
+    - docker container run -d --name container4 --net host alpine sleep 1000
