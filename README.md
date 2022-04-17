@@ -202,3 +202,8 @@ curso: https://www.udemy.com/course/curso-docker
     - docker network disconnect bridge container3
 
     - docker container run -d --name container4 --net host alpine sleep 1000
+
+#### DOCKER COMPOSE
+
+    - criar arquivo docker-compose.yml
+    - docker compose up
