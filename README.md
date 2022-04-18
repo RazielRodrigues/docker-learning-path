@@ -218,3 +218,5 @@ curso: https://www.udemy.com/course/curso-docker
     - seguir convenção dos containers que baixar
 
     - dokcer composer override voce consegue fazer a sobrescção de outros docker compose
+
+    - docker compose exec db psql -U postgres -d email_sender -c 'select * from emails'
