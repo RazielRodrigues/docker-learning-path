@@ -4,9 +4,10 @@
 curso: https://www.udemy.com/course/curso-docker
 
 #### DOCKER
+
     - não é um sistema de virtualização de s.o
     - é um sistema de administração de contêineres que separa um processo de um ambiente
-    - host e container compartilham o memso kernel
+    - host e container compartilham o mesmo kernel
     - empacota software com varios niveis de isolamento
     - o container tem as mesmas caracteristicas de uma vm, porém, com menos consumo de memória
     - xlc x docker
@@ -14,6 +15,12 @@ curso: https://www.udemy.com/course/curso-docker
           seja um processo mais facil de ser manipulado
 
 #### CONTAINERS
+
+    - modo daemon deixa rodando em background
+    - modo iterativo modo de teste
+    - arquivos não compartilhados entre containers
+    - o run sempre cria um novo container
+    - containers devem ter nomes unicos
 
     - segregação de processos no mesmo kernel (isolamento)
     - sistemas de arquivos criados a partir de uma imagem
@@ -36,7 +43,7 @@ curso: https://www.udemy.com/course/curso-docker
       possui outros binarios para o binario que voce quer funcionar
       e a junção dessas camadas formam as imagens
     - a apenas a ultima camada pode ser alterada quando o container for iniciado
-    - aufs (advanced multi layered unification filessystem) é muito usado
+    - AUFS (advanced multi layered unification filessystem) é muito usado
     - o grande objetivo dessa estrategia de dividir uma imagem em camadas é o reuso
     - é possivel compor imagens a partir de comandos de outras imagens
         - docker.hub
@@ -46,12 +53,12 @@ curso: https://www.udemy.com/course/curso-docker
     - docker hub é como o github
     - imagens são classes
     - container são objetos
-    - kitematic
+    - kitematic (versão cliente do CLI do docker)
 
     - arquitetura
         - daemon vai no registry e faz o download da imagem
         - apos isso faz um cache das imagens
-        - caso voce tenha as imagens na maquina ele  vai usar as que ja tem
+        - caso voce tenha as imagens na maquina ele vai usar as que ja tem
             
 #### INSTALAÇÃO
 
@@ -67,24 +74,15 @@ curso: https://www.udemy.com/course/curso-docker
         - o docker host é uma vm linux no windows
         - quando tem wsl é como se executasse no linux
 
-
     - apos o primeiro run a imagem esta em cache
 
-#### CONTAINERS
+#### CLI CONTAINER
 
     - o comando run executa quatro comandos
         - docker imagem pull
         - docker container create
         - docker container start
         - docker container exec
-
-    - modo daemon deixa rodando em background
-    - modo iterativo modo de teste
-    - arquivos não compartilhados entre containers
-    - o run sempre cria um novo container
-    - containers devem ter nomes unicos
-
-#### CLI CONTAINER
 
     - docker container run hello-world (container de teste)
     - docker container run debian bash --version  (ver a versão do bash)
@@ -131,48 +129,48 @@ curso: https://www.udemy.com/course/curso-docker
 
 #### CLI IMAGE
 
-    - docker image pull redis:latest
-    - docker image tag redis:latest coder-redis
-    - docker image ls
-    - docker image pull
-    - docker iamge rm <nome>
-    - docker image inspect <nome>
-    - docker image tag <imagemorigem> /mnome
-    - docker image build
-    - docker image push
+    - docker image ls (lista as imagens)
+    - docker iamge rm <nome> (remove a imagem)
+    - docker image inspect <nome> (informações da imagem)
+    - docker image push <nome> (envia a imagem para o registry)
+    - docker image pull <nome> (baixa a imagem do registry)
+    - docker image tag <imagemorigem> /<imagemdestino> (poe uma tag em uma imagem se baseando em outra)
+    - docker image build -t <nome> . (cria uma imagem a partir de um diretorio)
+
+    - docker image tag redis:latest coder-redis (cria uma imagem coder-redis baseada na redis:latest)
+
+    - docker image tag simple-build razielx3/simple-build:1.0
+
+    - docker login --username=<usuario> (faz login no registry)
+    - docker image push <nome imagem>:<versao> (envia a imagem para o registry logado)
 
 #### DOCKER IMAGE
 
     - concatenar layers
     - tentar reaproveitar layers
     - procure manter coisas estaveis na parte de cima do arquivo
-
     - docker registry: voce pode fazer um registry como um repositorio
     - docker hub: SAAS
-
     - criar o arquivo Dockerfile com o conteudo das suas imagens
-    - docker image build -t <nome> <caminho>
-    - docker container run -p 80:80 <nome>
 
-    - docker image build -t arg-build .
-    - docker container run arg-build bash -c 'echo $S3_BUCKET'
-    - docker image build --build-arg S3_BUCKET=myapp -t arg-build .
-    - docker container run arg-build bash -c 'echo $S3_BUCKET'
+    build simples:
+        - docker image build -t <nome> <caminho> (cria uma imagem a partir de um diretorio)
+        - docker container run -p 80:80 <nome> (inicia o container mapeando a porta 80 do container para a 80 do host)
+
+    build com argumento
         - pode se passar argumentos para o build assim dando formas de manipular o fluxo
-    - docker image inspect --format '{{index .Config.Env}}'
-        - mostra um dado do inspect
+            - docker image build -t arg-build . (cria uma imagem a partir de um diretorio)
+            - docker container run arg-build bash -c 'echo $S3_BUCKET' (inicia o container e executa um comando)
+            - docker image build --build-arg S3_BUCKET=myapp -t arg-build . (passa um parametro para a variavel do dockerfile)
+            - docker container run arg-build bash -c 'echo $S3_BUCKET' (inicia o container e executa um comando)
+            - docker image inspect --format '{{index .Config.Env}}' (mostra um dado do inspect)
 
-    - docker container run -p 80:80 copy-build
+    - docker container run -p 80:80 copy-build . (inicia o container mapeando a porta 80 do container para a 80 do host)
 
     - docker image build -t python-build .
     - docker container run -it -v C:\Users\Raziel\Desktop\docker-learning-path\docker\python-build:/app 
-      -p 80:8000 --name python-server2 python-build
+      -p 80:8000 --name python-server2 python-build (mapenado o diretorio para dentro do container)
     - docker container run -it --volumes-from=python-server2 debian cat /log/http-server.log
-
-    - docker image tag simple-build razielx3/simple-build:1.0
-
-    - docker login --username=<usuario>
-    - docker image push <nome imagem>:<versao>
 
 #### DOCKER NETWORK BRIDGE
 
@@ -183,40 +181,40 @@ curso: https://www.udemy.com/course/curso-docker
         - bridge network (default)
         - host network
         - overlay network (não é muito usado swarm)
-    - docker network ls
 
-    - docker container run -d --net none debian
-    - docker container run --rm alpine ash -c "ifconfig"
-    - docker container run --rm --net none alpine ash -c "ifconfig"
+    - docker network ls (lista as redes)
 
-    - docker container run -d --name container1 alpine sleep 1000
-    - docker container exec -it container1 ifconfig
+    teste de tipos de redes:
+        - docker container run -d --net none debian (iniciando rede none)
+        - docker container run --rm alpine ash -c "ifconfig"
+        - docker container run --rm --net none alpine ash -c "ifconfig"
 
-    - docker container exec -it container1 ping <ip do outro container>
-    - docker network create --driver bridge rede_nova
+        - docker container run -d --name container1 alpine sleep 1000 (iniciando rede bridge com nome container1)
+        - docker container exec -it container1 ifconfig
 
-    - docker container run -d --name container3 --net rede_nova alpine sleep 1000
-    - docker container exec -it container3 ifconfig
-    - docker network connect bridge container3
-    - docker container inspect container1
-    - docker network disconnect bridge container3
+        - docker container exec -it container1 ping <ip do outro container> (pinga o outro container)
+        - docker network create --driver bridge rede_nova
 
-    - docker container run -d --name container4 --net host alpine sleep 1000
+        - docker container run -d --name container3 --net rede_nova alpine sleep 1000
+        - docker container exec -it container3 ifconfig
+        - docker network connect bridge container3
+        - docker container inspect container1
+        - docker network disconnect bridge container3
+
+        - docker container run -d --name container4 --net host alpine sleep 1000
 
 #### DOCKER COMPOSE
 
     - criar arquivo docker-compose.yml
+    - seguir convenção dos containers que baixar
+    - com o docker composer override voce consegue sobrescrever valores do arquivo de compose
+
     - docker-compose up (inicia a composição em modo iterativo)
     - docker-compose up -d (inicia a composição em background)
-
-    - docker-compose exec db (executa comandos dentro do container)
-    - docker-compose exec db psql -U postgres -c '\l' (comando de execução dentro do banco de dados do container, nada mais é que o comando do proprio banco de dados)
+    - docker-compose exec <container> <comando> (executa comandos dentro do container)
     - docker-compose down (derruba os containers)
     - docker-compose logs -f -t (vigia os logs)
-    - docker compose up -d --scale worker=3
+    - docker compose up -d --scale <nome container>=<quantidade> (inicia diversos containers)
 
-    - seguir convenção dos containers que baixar
-
-    - dokcer composer override voce consegue fazer a sobrescção de outros docker compose
-
+    - docker-compose exec db psql -U postgres -c '\l' (executar comando do banco de dados)
     - docker compose exec db psql -U postgres -d email_sender -c 'select * from emails'
