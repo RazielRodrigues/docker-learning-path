@@ -1,5 +1,5 @@
 
-<img src="...">
+<img src="docker-ferramenta-para-dev.jpg">
 
 curso: https://www.udemy.com/course/curso-docker
 
