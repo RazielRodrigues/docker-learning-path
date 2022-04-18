@@ -1,62 +1,137 @@
+# Definindo versão do docker compose
+# arquivos yaml respeitam uma forte hierarquia de identação
 version: '3'
+
+# Volumes são como a conexão da maquina host com o container
+# eles fazem um link entre um diretorio interno do host com
+# o de um container sendo que o container não vai conseguir
+# acessar fora do diretorio definido no volume
 volumes:
   dados:
+
+    # Aqui é onde se define nomes de redes diferentes entre containers
+    # com isso é possível definir as redes de comunicação entre os containers
+    # deixando assim uma camada a mais de segurança
 networks:
   banco:
   web:
   fila:
+
+    # Aqui é onde se define os containers que serão criados
+    # com as suas respectivas caracteristicas
+    # a tag servives define tudo isso, e tudo que vim abaixo dela
+    # será definido como um container isolado
+
+    # cada bloco é um container
 services:
+
   db:
+
+    # postgres:latest para baixar a ultima versão
     image: postgres:9.6
+
+    # dados de .env do container
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123
+
+    # ligando diretorios
     volumes:
+      # mapeando o diretorio dados para o data do postgres com isso eu tenho acesso a esse dir
       - dados:/var/lib/postgresql/data
+      # aqui é como se criasse uma pasta scripts dentro do postgres e assim eu passo meus scripts para lá
       - ./scripts:/scripts
+      # primeiro arquivo que vai ser executado pelo postgress, esse passo a passo é da convenção dele
       - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    # rede do container
     networks:
       - banco
+
   frontend:
+
+    # baixando imagem
     image: nginx:1.13
+
+    # mapeando diretorio
     volumes:
+      # convesão da pasta de exposição do nginx
       - ./web:/usr/share/nginx/html
+      # sobrescrevendo arquivo de default do nginx com o meu local
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+    # expondo portas do container
     ports:
+      # posso definir uma ou mais portas
+      # devo lembrar que é a porta do serviço no caso nginx é 80
       - 80:80
+
+    # rede do container
     networks:
       - web
+
+    # Inicializa uma cascata de containers que sejam dependentes um do outro
+    # ou seja esse só será inicilizado caso o app já tenha sido
     depends_on:
-      # Inicializa uma cascata de containers que sejam dependentes um do outro
       - app
+
   app:
+
+    # baixando imagem
     image: python:3.6
+
+    # mapeando diretorio
     volumes:
       - ./app:/app
+
+    # subistitui o diretorio de trabalho padrão da imagem
     working_dir: /app
+
+    # após eu mapear o diretorio eu consigo rodar um bash que esteja dentro dele
     command: bash ./app.sh
-    # ports:
-    #   - 8080:8080
+
+    # redes que o app está presente, caso nao estivesse
+    # eu nao ia conseguir acessar o banco pelo CRUD
     networks:
       - banco
       - web
       - fila
+
+    # dependencia
     depends_on:
       - db
       - queue
+
+    # arquivo .env
     environment:
       - DB_NAME=email_sender
+
   queue:
     image: redis:3.2
     networks:
       - fila
+
   worker:
+
+    # passando esse parametro o build da imagem será feito por
+    # um DockerFile dentro do diretorio do projeto
+    # para isso precisa ser mapeado um volume
     build: worker
+
+    # mapeando volume
     volumes:
       - ./worker:/worker
+
+    # subistitui o diretorio de trabalho padrão da imagem
     working_dir: /worker
+
+    # rodando o comando
     command: worker.py
+
+    # rede do container
     networks:
       - fila
+
+    # dependencia
     depends_on:
       - queue

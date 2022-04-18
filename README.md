@@ -218,3 +218,5 @@ curso: https://www.udemy.com/course/curso-docker
 
     - docker-compose exec db psql -U postgres -c '\l' (executar comando do banco de dados)
     - docker compose exec db psql -U postgres -d email_sender -c 'select * from emails'
+
+<a href="docker\email-build\docker-compose.yml">Leia mais...</a>
