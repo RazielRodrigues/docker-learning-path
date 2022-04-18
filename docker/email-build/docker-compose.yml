@@ -1,6 +1,10 @@
 version: '3'
 volumes:
   dados:
+networks:
+  banco:
+  web:
+  fila:
 services:
   db:
     image: postgres:9.6
@@ -11,6 +15,8 @@ services:
       - dados:/var/lib/postgresql/data
       - ./scripts:/scripts
       - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - banco
   frontend:
     image: nginx:1.13
     volumes:
@@ -18,7 +24,12 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80
-  app: 
+    networks:
+      - web
+    depends_on:
+      # Inicializa uma cascata de containers que sejam dependentes um do outro
+      - app
+  app:
     image: python:3.6
     volumes:
       - ./app:/app
@@ -26,3 +37,24 @@ services:
     command: bash ./app.sh
     # ports:
     #   - 8080:8080
+    networks:
+      - banco
+      - web
+      - fila
+    depends_on:
+      - db
+      - queue
+  queue:
+    image: redis:3.2
+    networks:
+      - fila
+  worker:
+    image: python:3.6
+    volumes:
+      - ./worker:/worker
+    working_dir: /worker
+    command: bash ./app.sh
+    networks:
+      - fila
+    depends_on:
+      - queue
