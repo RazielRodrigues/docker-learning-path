@@ -212,6 +212,9 @@ curso: https://www.udemy.com/course/curso-docker
     - docker-compose exec db (executa comandos dentro do container)
     - docker-compose exec db psql -U postgres -c '\l' (comando de execução dentro do banco de dados do container, nada mais é que o comando do proprio banco de dados)
     - docker-compose down (derruba os containers)
-    - docker-compose logs -f -t
+    - docker-compose logs -f -t (vigia os logs)
+    - docker compose up -d --scale worker=3
 
     - seguir convenção dos containers que baixar
+
+    - dokcer composer override voce consegue fazer a sobrescção de outros docker compose
