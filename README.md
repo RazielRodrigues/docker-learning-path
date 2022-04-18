@@ -206,4 +206,9 @@ curso: https://www.udemy.com/course/curso-docker
 #### DOCKER COMPOSE
 
     - criar arquivo docker-compose.yml
-    - docker compose up
+    - docker-compose up (inicia a composição em modo iterativo)
+    - docker-compose up -d (inicia a composição em background)
+
+    - docker-compose exec db (executa comandos dentro do container)
+    - docker-compose exec db psql -U postgres -c '\l' (comando de execução dentro do banco de dados do container, nada mais é que o comando do proprio banco de dados)
+    - docker-composer down (derruba os containers)

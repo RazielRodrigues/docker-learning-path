@@ -1,0 +1,7 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
