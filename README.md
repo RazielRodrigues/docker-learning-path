@@ -83,6 +83,7 @@ curso: https://www.udemy.com/course/curso-docker
         - docker container create
         - docker container start
         - docker container exec
+        - docker exec -it <nome container> bash
 
     - docker container run hello-world (container de teste)
     - docker container run debian bash --version  (ver a versão do bash)
