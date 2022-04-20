@@ -219,4 +219,10 @@ curso: https://www.udemy.com/course/curso-docker
     - docker-compose exec db psql -U postgres -c '\l' (executar comando do banco de dados)
     - docker compose exec db psql -U postgres -d email_sender -c 'select * from emails'
 
-<a href="docker\email-build\docker-compose.yml">Leia mais...</a>
+<a href="docker\email-build\docker-compose.yml">Primeiro docker composer</a>
+
+- https://medium.com/@FernandoDebrand/criando-um-ambiente-de-desenvolvimento-php-com-docker-compose-a7cad3373df0
+- https://dev.to/truthseekers/setup-a-basic-local-php-development-environment-in-docker-kod
+- https://github.com/truthseekers/php-docker-simple
+- https://towardsdatascience.com/connect-to-mysql-running-in-docker-container-from-a-local-machine-6d996c574e55
+- https://stackoverflow.com/questions/33827342/how-to-connect-mysql-workbench-to-running-mysql-inside-docker
